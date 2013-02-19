@@ -1,0 +1,11 @@
+diff -ruN a/arch/arm/boot/dts/kirkwood-goflexnet.dts b/arch/arm/boot/dts/kirkwood-goflexnet.dts
+--- a/arch/arm/boot/dts/kirkwood-goflexnet.dts	2013-02-19 00:58:34.000000000 +0100
++++ b/arch/arm/boot/dts/kirkwood-goflexnet.dts	2013-02-19 16:59:34.707568602 +0100
+@@ -78,6 +78,7 @@
+ 		};
+ 
+ 		nand@3000000 {
++			chip-delay = <40>;
+ 			status = "okay";
+ 
+ 			partition@0 {
