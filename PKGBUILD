@@ -11,7 +11,7 @@ pkgbase=linux-kirkwood-dt
 pkgname=('linux-kirkwood-dt' 'linux-headers-kirkwood-dt')
 #pkgname=linux-test       # Build kernel with a different name
 _kernelname=${pkgname#linux}
-_basekernel=3.8
+_basekernel=3.8.6
 pkgver=${_basekernel}
 pkgrel=1
 cryptover=1.5
@@ -20,9 +20,8 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'uboot-mkimage')
 options=('!strip')
-source=("ftp://ftp.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.bz2"
+source=("ftp://ftp.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         'support.patch'
-        'goflexnet-chip-delay.patch'
         'netdev-trigger.patch'
         'sata-disk-trigger.patch'
         'goflexnet-sata-trigger-on-orange-led.patch'
@@ -31,17 +30,17 @@ source=("ftp://ftp.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.bz2
         'change-default-console-loglevel.patch'
         'usb-add-reset-resume-quirk-for-several-webcams.patch'
         "http://download.gna.org/cryptodev-linux/cryptodev-linux-${cryptover}.tar.gz")
-md5sums=('fcd1d2e60e1033c935a13ef81c89ea2d'
+md5sums=('0934e6b31931c1832e48a28bd35ef27f'
          'f5d3635da03cb45904bedd69b47133de'
-         '0096569d27fa25f437f14aa4d5ebc6c9'
          '1cc55def6af5db68f3d2300134cb146a'
          '4abad33765c53c1c181d13416d10470e'
-         'e7cc9d6a2842da1f3cea7381285069d2'
+         '1bf3874a86f1e576b115595e6e3870e1'
          '4e9bf0d5a2007185a3a79312e97f9fee'
          '9506a43fff451fda36d5d7b1f5eaed04'
          '9d3c56a4b999c8bfbd4018089a62f662'
          'd00814b57448895e65fbbc800e8a58ba'
          '3a4b8d23c1708283e29477931d63ffb8')
+
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -56,8 +55,6 @@ build() {
   
   # add some patches:
   
-  # fix GoFlex Net nand-chip-delay
-  patch -Np1 -i "${srcdir}/goflexnet-chip-delay.patch"
   # add netdev led trigger to show network activity
   patch -Np1 -i "${srcdir}/netdev-trigger.patch"
   # add sata-disk trigger (derived from ide-disk-trigger) to show sata activity
@@ -152,7 +149,7 @@ package_linux-kirkwood-dt() {
   # remove the firmware
   rm -rf "${pkgdir}/lib/firmware"
   # gzip -9 all modules to save 100MB of space
-  find "${pkgdir}" -name '*.ko' |xargs -P 2 -n 1 gzip -9
+  find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
   # make room for external modules
   ln -s "../extramodules-${_basekernel}-${_kernelname:-EBBES}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
   # add real version for building modules and running depmod from post_install/upgrade
