@@ -1,6 +1,6 @@
 diff -Nur a/arch/arm/boot/dts/kirkwood-goflexnet.dts b/arch/arm/boot/dts/kirkwood-goflexnet.dts
---- a/kirkwood-goflexnet.dts	2013-02-19 17:31:27.000000000 +0100
-+++ b/kirkwood-goflexnet.dts	2013-02-19 18:28:27.978159912 +0100
+--- a/arch/arm/boot/dts/kirkwood-goflexnet.dts	2013-02-19 17:31:27.000000000 +0100
++++ b/arch/arm/boot/dts/kirkwood-goflexnet.dts	2013-02-19 18:28:27.978159912 +0100
 @@ -119,6 +119,7 @@
  		fault {
  			label = "status:orange:fault";

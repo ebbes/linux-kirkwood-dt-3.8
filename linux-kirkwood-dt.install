@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 
 KERNEL_NAME=-kirkwood-dt
-KERNEL_VERSION=3.8.0-EBBES
+KERNEL_VERSION=3.8.6-1-EBBES
 
 post_install () {
   # updating module dependencies
